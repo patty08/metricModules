@@ -14,102 +14,13 @@
 metricbeat.config.modules:
 
   # Glob pattern for configuration reloading
-  path: ${path.config}/conf.d/*.yml
+  path: ${path.config}/conf.d/*.yaml
 
   # Period on which files under path should be checked for chagnes
   reload.period: 10s
 
   # Set to true to enable config reloading
   reload.enabled: false
-
-#==========================  Modules configuration ============================
-metricbeat.modules:
-
-#------------------------------- System Module -------------------------------
-- module: system
-  metricsets:
-    # CPU stats
-    - cpu
-
-    # System Load stats
-    - load
-
-    # Per CPU core stats
-    #- core
-
-    # IO stats
-    - diskio
-
-    # Per filesystem stats
-     #- filesystem
-
-    # File system summary stats
-    #- fsstat
-
-    # Memory stats
-    - memory
-
-    # Network stats
-     #- network
-
-    # Per process stats
-    #- process
-
-    # Sockets and connection info (linux only)
-    #- socket
-  enabled: true
-  period: 10s
-  # processes: ['.*']
-
-  # if true, exports the CPU usage in ticks, together with the percentage values
-  #cpu_ticks: false
-
-  # Enable collection of cgroup metrics from processes on Linux.
-  #process.cgroups.enabled: true
-
-  # A list of regular expressions used to whitelist environment variables
-  # reported with the process metricset's events. Defaults to empty.
-  #process.env.whitelist: []
-
-  # Configure reverse DNS lookup on remote IP addresses in the socket metricset.
-  #socket.reverse_lookup.enabled: false
-  #socket.reverse_lookup.success_ttl: 60s
-  #socket.reverse_lookup.failure_ttl: 60s
-
-
-#================================ General ======================================
-
-# The name of the shipper that publishes the network data. It can be used to group
-# all the transactions sent by a single shipper in the web interface.
-# If this options is not defined, the hostname is used.
-#name:
-
-# The tags of the shipper are included in their own field with each
-# transaction published. Tags make it easy to group servers by different
-# logical properties.
-#tags: ["service-X", "web-tier"]
-
-# Optional fields that you can specify to add additional information to the
-# output. Fields can be scalar values, arrays, dictionaries, or any nested
-# combination of these.
-#fields:
-#  env: staging
-
-# If this option is set to true, the custom fields are stored as top-level
-# fields in the output document instead of being grouped under a fields
-# sub-dictionary. Default is false.
-#fields_under_root: false
-
-# Internal queue size for single events in processing pipeline
-#queue_size: 1000
-
-# The internal queue size for bulk events in the processing pipeline.
-# Do not modify this value.
-#bulk_queue_size: 0
-
-# Sets the maximum number of CPUs that can be executing simultaneously. The
-# default is the number of logical CPUs available in the system.
-#max_procs:
 
 #================================ Processors ===================================
 
@@ -128,52 +39,18 @@ metricbeat.modules:
 # values:
 
 
-# CPU
+# Docker
 processors:
 - drop_fields:
-   fields: ["system.cpu.nice.pct","system.cpu.idle.pct","system.cpu.irq.pct","system.cpu.softirq.pct","system.cpu.steal.pct","system.cpu.user.ticks","system.cpu.system.ticks","system.cpu.nice.ticks","system.cpu.idle.ticks","system.cpu.iowait.ticks","system.cpu.irq.ticks","system.cpu.softirq.ticks","system.cpu.steal.ticks"]
-
-# Diskio
-processors:
-- drop_fields:
-   fields: ["system.diskio.serial_number","system.diskio.read.count","system.diskio.write.count","system.diskio.read.bytes","system.diskio.write.bytes"]
-   
-# Filesystem
-processors:
-- drop_fields:
-   fields: ["system.filesystem.files","system.filesystem.free_files","system.filesystem.total","system.filesystem.used.bytes"]
-   
-# Load
-processors:
-- drop_fields:
-   fields: ["system.load.norm.1","system.load.norm.5","system.load.norm.15"]
-   
-# Memory
-processors:
-- drop_fields:
-   fields: ["system.memory.total","system.memory.used.bytes","system.memory.free","system.memory.used.pct","system.memory.swap.total","system.memory.swap.used.bytes","system.memory.swap.free","system.memory.swap.used.pct",system.memory.actual.used.bytes","system.memory.actual.free","system.memory.actual.used.pct"]
-   
-# Network
-processors:
-- drop_fields:
-   fields: ["system.network.out.packets","system.network.in.packets","system.network.in.dropped","system.network.out.dropped"]
-
-
-#The following example drops the events that have the HTTP response code 200:
-
-#processors:
-#- drop_event:
-#    when:
-#       equals:
-#           http.code: 200
-
-# The following example enriches each event with metadata from the cloud
-# provider about the host machine. It works on EC2, GCE, and DigitalOcean.
-#
-#processors:
-#- add_cloud_metadata:
-#
-
+   fields: ["docker.container.command","docker.container.created","docker.container.id","docker.container.image","docker.container.name","docker.container.status","docker.container.size.root_fs","docker.container.size.rw","docker.container.labels","docker.container.tags","docker.cpu.kernel.ticks","docker.cpu.system.ticks",
+   "docker.cpu.user.ticks","docker.healthcheck.failingstreak","docker.healthcheck.status","docker.healthcheck.event.end_date","docker.healthcheck.event.start_date","docker.healthcheck.event.output","docker.healthcheck.event.exit_code","docker.image.id.current","docker.image.id.parent","docker.image.created","docker.image.size.virtual","docker.image.size.regular","docker.image.labels","docker.image.tags","docker.info.images","docker.memory.fail.count","docker.memory.limit","docker.memory.rss.total","docker.memory.rss.pct","docker.memory.usage.total","docker.network.interface","docker.network.in.dropped","docker.network.in.packets","docker.network.out.dropped","docker.network.out.packets",
+   "system.cpu.nice.pct","system.cpu.idle.pct","system.cpu.irq.pct","system.cpu.softirq.pct","system.cpu.steal.pct","system.cpu.user.ticks","system.cpu.system.ticks","system.cpu.nice.ticks","system.cpu.idle.ticks","system.cpu.iowait.ticks","system.cpu.irq.ticks","system.cpu.softirq.ticks","system.cpu.steal.ticks",
+   "system.diskio.serial_number","system.diskio.read.count","system.diskio.write.count","system.diskio.read.bytes","system.diskio.write.bytes",
+   "system.filesystem.files","system.filesystem.free_files","system.filesystem.total","system.filesystem.used.bytes",
+   "system.load.norm.1","system.load.norm.5","system.load.norm.15",
+   "system.memory.total","system.memory.used.bytes","system.memory.free","system.memory.used.pct","system.memory.swap.total","system.memory.swap.used.bytes","system.memory.swap.free","system.memory.swap.used.pct",system.memory.actual.used.bytes","system.memory.actual.free","system.memory.actual.used.pct",
+   "system.network.out.packets","system.network.in.packets","system.network.in.dropped","system.network.out.dropped"]
+  
 #================================ Outputs ======================================
 
 # Configure what outputs to use when sending the data collected by the beat.
@@ -195,8 +72,8 @@ output.elasticsearch:
 
   # Optional protocol and basic auth credentials.
   #protocol: "https"
-  #username: "elastic"
-  #password: "changeme"
+  username: "elastic"
+  password: "changeme"
 
   # Dictionary of HTTP parameters to pass within the url with index operations.
   #parameters:

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  elk-metricbeat:
+    image:  docker.elastic.co/beats/metricbeat:5.4.0
+    ports:
+     - "9200:9200"
+    environment:
+     - xpack.security.enabled=false
+    volumes:
+     - /conf/metricbeat/:/usr/share/metricbeat/
+    command: -system.hostfs=/hostfs
