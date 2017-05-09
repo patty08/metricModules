@@ -6,10 +6,10 @@ services:
      - "9200:9200"
     environment:
      - xpack.security.enabled=false
+     - ELASTICSEARCH_URL=http://localhost:9200
     volumes:
-     - ./:/usr/share/metricbeat/
+     - ./conf/metricbeat:/usr/share/metricbeat/confOriginal
      - /proc:/hostfs/proc:ro
      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
      - /:/hostfs:ro
     network_mode: "host"
-    command: ["metricbeat.config.modules.path:/usr/share/metricbeat/*.yaml", "metricbeat.config.modules.reload.period:10s", "metricbeat.config.modules.reload.enabled:true", "system.hostfs=/hostfs", "output.elasticsearch.hosts:[\"localhost:9200\"]"]  
