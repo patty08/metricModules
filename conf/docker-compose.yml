@@ -8,8 +8,6 @@ services:
      - xpack.security.enabled=false 
      - http.host=0.0.0.0
      - transport.host=127.0.0.1
-    sysctls:
-    - vm.max_map_count=262144
   elk-kibana:
     image: docker.elastic.co/kibana/kibana:5.4.0
     network_mode: "host"
