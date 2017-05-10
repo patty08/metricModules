@@ -57,7 +57,7 @@ processors:
 # Multiple outputs may be used.
 
 #-------------------------- Elasticsearch output -------------------------------
-#output.elasticsearch:
+output.elasticsearch:
   # Boolean flag to enable or disable the output module.
   #enabled: true
 
