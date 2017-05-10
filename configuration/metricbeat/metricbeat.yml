@@ -14,13 +14,13 @@
 metricbeat.config.modules:
 
   # Glob pattern for configuration reloading
-  path: ${path.config}/*.yaml
+  path: /usr/share/metricbeat/conf/custom/*.yml
 
   # Period on which files under path should be checked for chagnes
   reload.period: 10s
 
   # Set to true to enable config reloading
-  reload.enabled: false
+  reload.enabled: true
 
 #================================ Processors ===================================
 
@@ -57,7 +57,7 @@ processors:
 # Multiple outputs may be used.
 
 #-------------------------- Elasticsearch output -------------------------------
-output.elasticsearch:
+#output.elasticsearch:
   # Boolean flag to enable or disable the output module.
   #enabled: true
 
@@ -495,9 +495,9 @@ output.elasticsearch:
 
 
 #----------------------------- Console output ---------------------------------
-#output.console:
+output.console:
   # Boolean flag to enable or disable the output module.
-  #enabled: true
+  enabled: true
 
   # Pretty print json event
   #pretty: false
@@ -595,8 +595,8 @@ output.elasticsearch:
 
 # Logging to rotating files files. Set logging.to_files to false to disable logging to
 # files.
-logging.to_files: true
-logging.files:
+#logging.to_files: true
+#logging.files:
   # Configure the path where the logs are written. The default is the logs directory
   # under the home path (the binary location).
   #path: /var/log/metricbeat
@@ -610,4 +610,5 @@ logging.files:
 
   # Number of rotated log files to keep. Oldest files will be deleted first.
   #keepfiles: 7
+
 
